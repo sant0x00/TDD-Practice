@@ -15,7 +15,7 @@ public class BonusService {
     final var bonus = employee.getSalary().multiply(bonusPercentage).setScale(SCALE, ROUNDING_MODE);
 
     if (bonus.compareTo(MAX_ALLOWED_BONUS) > 0) {
-      return BigDecimal.ZERO;
+      throw new IllegalArgumentException("An employee with salary higher than 100k does not receive a bonus");
     }
     return bonus;
   }

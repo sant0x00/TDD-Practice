@@ -1,12 +1,16 @@
 package com.github.sant0x00.service;
 
 import com.github.sant0x00.builder.EmployeeBuilder;
-import static org.junit.jupiter.api.Assertions.assertEquals;
+import com.github.sant0x00.model.Employee;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 
 import java.math.BigDecimal;
 import java.math.RoundingMode;
+import java.util.function.Consumer;
+
+import static org.junit.jupiter.api.Assertions.assertEquals;
+import static org.junit.jupiter.api.Assertions.assertThrows;
 
 class BonusServiceTest {
   @Test
@@ -25,15 +29,15 @@ class BonusServiceTest {
   }
 
   @Test
-  @DisplayName("should return the bonus of the salary when zero")
-  void calculateBonusOverMaxAllowed() {
+  @DisplayName("should return to exception if the employee's salary is greater than 100k")
+  void bonusExceptionTest() {
     // given
     final var employee = new EmployeeBuilder().withName("test").build();
 
     // when
-    final var actualBonus = BonusService.calculateBonus(employee);
+    final Consumer<Employee> runnable = BonusService::calculateBonus;
 
     // then
-    assertEquals(BigDecimal.ZERO, actualBonus);
+    assertThrows(IllegalArgumentException.class, () -> runnable.accept(employee));
   }
 }
