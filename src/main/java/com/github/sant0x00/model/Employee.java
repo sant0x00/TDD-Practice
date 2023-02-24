@@ -28,6 +28,11 @@ public class Employee {
   }
 
   public BigDecimal readjustSalary(BigDecimal readjust) {
-    return this.salary = this.salary.add(readjust).setScale(2, RoundingMode.HALF_UP);
+    this.salary = this.salary.add(readjust);
+    return roundSalary();
+  }
+
+  private BigDecimal roundSalary() {
+    return this.salary = this.salary.setScale(2, RoundingMode.HALF_UP);
   }
 }
